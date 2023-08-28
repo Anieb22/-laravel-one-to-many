@@ -82,7 +82,7 @@
                             <th scope="row" colspan="2">Series:</th>
                             
                                 <td class="text-primary text-uppercase">
-                                {{ $project->series }}
+                                {{ $project->type->type }}
                                 </td>
                             </tr>
                             <tr>
