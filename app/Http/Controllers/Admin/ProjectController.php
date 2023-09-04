@@ -51,7 +51,7 @@ class ProjectController extends Controller
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
-        dd($form_data);
+        $project->type_id;
         $project->save();
         return redirect()->route('admin.projects.index');
 
