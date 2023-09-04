@@ -38,6 +38,13 @@
                   <label for="formFile" class="form-label">Logo</label>
                   <input class="form-control" type="file" id="thumb" name="thumb">
                 </div>
+                <div class="form-group my-2">
+                    <h6 for="" class="control-label">Tipo</h6>
+                    @foreach ($types as $type)
+                    <input type="radio" value="{{$type->id}}" name = "type_id" id="{{$type->id}}">
+                    <label for="{{$type->id}}">{{$type->type}}</label>
+                    @endforeach
+                </div>
                 <div class="form-group my-2 d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Aggiungi Progetto</button>
                     <a class="btn btn-md btn-primary" href="{{route('admin.projects.index')}}">Torna alla home</a>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
 
     }
 
@@ -39,20 +41,17 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
         $form_data = $request->all();
 
         $project = new Project();
-        $project->azienda = $form_data['azienda'];
-        $project->nome_progetto = $form_data['nome_progetto'];
-        $project->descrizione = $form_data['descrizione'];
-        $project->passaggi = $form_data['passaggi'];
-        $project->data_di_creazione = $form_data['data_di_creazione'];        
+        $project->fill($form_data);
         if ($request->hasFile('thumb')) {
             $path = $request->file('thumb')->store('thumb');
             $project->thumb = $path;
         }
+        dd($form_data);
         $project->save();
         return redirect()->route('admin.projects.index');
 
@@ -66,7 +65,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.projects.show', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.show', compact('project', 'types'));
 
     }
 
@@ -78,7 +78,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
 
     }
 
